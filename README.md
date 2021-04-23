@@ -39,4 +39,19 @@ Successfully installed pip-20.3.4
   Installing collected packages: psutil, glances
   Successfully installed glances-3.1.6.2 psutil-5.8.0
   ```
-3. 然后输入 glances 会显示GUI界面
+3. 然后输入 glances 会显示GUI界面 (linux 下面需要切换成 root 权限)
+
+
+## glances 安装folder plugin 用来监控 folder 遇到的问题
+
+1. glances 的配置文件放到 `~/.config/glances/glances.conf`
+2. 如果通过python运行的话，可能会看不到 folder 配置信息，需要我们通过 debug 来查看log
+3. 通过 glances -V 查看 log输出的目录 `Log file: /home/pvc/.local/share/glances/glances.log`  
+    然后 `sudo vim ~/.local/share/glances/glances.log ` 会看到 `Scandir not found. Please use Python 3.5+ or install the scandir lib`
+4. 然后通过 pip 安装 scandir 插件 `pip install scandir`
+5. 然后 输入 glances 可以看到 folder
+
+## glances 查看 restful API 
+1. glances -w 启动 client 模式 
+2. 去 github 查看 restful api `https://github.com/nicolargo/glances/wiki/The-Glances-RESTFULL-JSON-API`
+3. 在 Mac 电脑 输入 `curl XGET http://192.168.1.34:61208/api/3/pluginslist`
