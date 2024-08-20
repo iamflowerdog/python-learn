@@ -6,3 +6,4 @@ import os
 
 print('')
 print(sys.executable)
+print(os.getcwd())
