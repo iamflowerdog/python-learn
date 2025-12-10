@@ -51,10 +51,42 @@
             font-size: 0.9em;
             margin-top: 5px;
         }
+        .user-info {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+        }
+        .btn-login {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .btn-logout {
+            color: #dc3545;
+            text-decoration: none;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="user-info">
+            {% if user.is_authenticated %}
+                <span>👋 你好，<strong>{{ user.username }}</strong>！</span>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none; border:none; color:#dc3545; cursor:pointer; text-decoration:underline;">退出登录</button>
+                </form>
+            {% else %}
+                <span>你还未登录</span>
+                <a href="{% url 'login' %}" class="btn-login">去登录</a>
+            {% endif %}
+        </div>
+
         <h1>🚀 {{ title }}</h1>
         <p>{{ message }}</p>
         

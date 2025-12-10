@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - Django Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 { text-align: center; color: #0c4b33; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; color: #666; }
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* 确保 padding 不会增加宽度 */
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #0c4b33;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        button:hover { background-color: #093826; }
+        .error { color: red; font-size: 0.875rem; margin-top: 0.5rem; }
+        .back-link { display: block; text-align: center; margin-top: 1rem; color: #666; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>用户登录</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+                <p class="error">用户名或密码不正确</p>
+            {% endif %}
+            <div class="form-group">
+                <label for="id_username">用户名</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">密码</label>
+                {{ form.password }}
+            </div>
+            <button type="submit">登录</button>
+        </form>
+        <a href="/" class="back-link">返回首页</a>
+    </div>
+</body>
+</html>

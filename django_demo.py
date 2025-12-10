@@ -16,16 +16,65 @@ POSTS = [
 ]
 
 # 最小化配置
-settings.configure(
-    DEBUG=True,
-    SECRET_KEY='django-insecure-demo-key-12345',
-    ROOT_URLCONF=__name__,
-    ALLOWED_HOSTS=['*'],
-    TEMPLATES=[{
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-    }],
-)
+if not settings.configured:
+    settings.configure(
+        DEBUG=True,
+        SECRET_KEY='django-insecure-demo-key-12345',
+        ROOT_URLCONF=__name__,
+        ALLOWED_HOSTS=['*'],
+        # 数据库配置
+        DATABASES={
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'djangodemo',      # 数据库名称，请确保在 Postgres 中创建了此数据库
+                'USER': 'postgres',        # 数据库用户名
+                'PASSWORD': 'password',    # 数据库密码，请修改为你自己的密码
+                'HOST': 'localhost',
+                'PORT': '5432',
+            }
+        },
+        # 安装的应用
+        INSTALLED_APPS=[
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+        ],
+        # 中间件
+        MIDDLEWARE=[
+            'django.middleware.security.SecurityMiddleware',
+            'django.contrib.sessions.middleware.SessionMiddleware',
+            'django.middleware.common.CommonMiddleware',
+            'django.middleware.csrf.CsrfViewMiddleware',
+            'django.contrib.auth.middleware.AuthenticationMiddleware',
+            'django.contrib.messages.middleware.MessageMiddleware',
+            'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        ],
+        TEMPLATES=[{
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [os.path.join(BASE_DIR, 'templates')],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        }],
+        STATIC_URL='/static/',
+        LOGIN_REDIRECT_URL='/',  # 登录成功后跳转到首页
+    )
+
+# 初始化 Django
+import django
+django.setup()
+
+# 必须在 django.setup() 之后导入视图
+from django.contrib.auth.views import LoginView, LogoutView
 
 # 视图函数
 def hello(request):
@@ -46,13 +95,17 @@ def post_detail(request, post_id):
 
 # URL 路由
 urlpatterns = [
-    path('', hello),
-    path('post/<int:post_id>/', post_detail),
+    path('', hello, name='home'),
+    path('post/<int:post_id>/', post_detail, name='post_detail'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
 ]
 
 # 运行服务器
 if __name__ == '__main__':
     from django.core.management import execute_from_command_line
     import sys
-    sys.argv = ['django_demo.py', 'runserver', '8000']
+    # 如果没有参数，默认运行 runserver
+    if len(sys.argv) == 1:
+        sys.argv += ['runserver', '8000']
     execute_from_command_line(sys.argv)
