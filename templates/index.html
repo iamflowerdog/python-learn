@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 20px;
+        }
+        h1 { color: #0c4b33; }
+        p { color: #666; }
+        .post-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-top: 30px;
+        }
+        .post-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        .post-item:last-child { border-bottom: none; }
+        .post-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: block;
+        }
+        .post-link:hover { color: #007bff; }
+        .post-desc {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 {{ title }}</h1>
+        <p>{{ message }}</p>
+        
+        <ul class="post-list">
+            {% for post in posts %}
+            <li class="post-item">
+                <a href="/post/{{ post.id }}/" class="post-link">{{ post.title }}</a>
+                <div class="post-desc">{{ post.content|truncatechars:30 }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <p><small>当前时间: {% now "Y-m-d H:i:s" %}</small></p>
+    </div>
+</body>
+</html>

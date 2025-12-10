@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Django Demo",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/django_demo.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}

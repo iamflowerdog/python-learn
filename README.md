@@ -1,6 +1,24 @@
 # python-learn
 python
 
+## Django 最简单 Demo
+
+这是一个最简单的 Django demo，只用一个文件实现。
+
+### 运行方法
+
+```bash
+# 激活虚拟环境（如果还没激活）
+source .venv/bin/activate
+
+# 运行 Django demo
+python django_demo.py
+```
+
+然后在浏览器打开 `http://127.0.0.1:8000/` 即可看到 "Hello, Django!" 信息。
+
+按 `Ctrl+C` 停止服务器。
+
 
 ## ubuntu 安装 pip `https://stackoverflow.com/questions/37495375/python-pip-install-throws-typeerror-unsupported-operand-types-for-retry`
 
