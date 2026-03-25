@@ -28,19 +28,20 @@ pip install requests
 
 ## 文件说明
 
-- `config.py` - API 配置文件（包含密钥，已忽略提交）
+- `config.py` - API 配置文件（包含密钥和模型列表，已忽略提交）
 - `config.example.py` - 配置文件模板
 - `chat_demo.py` - 完整的对话 demo，包含：
   - 单次对话示例
   - 交互式对话模式（保留对话历史）
 - `simple_chat.py` - 最简单的对话示例
+- `test_models.py` - 测试不同 Kimi 模型的对比工具
 
 ## 使用方法
 
 ### 1. 运行基本示例
 
 ```bash
-python chat_demo.py
+python3 chat_demo.py
 ```
 
 这会运行几个预设的对话示例。
@@ -58,22 +59,39 @@ if __name__ == "__main__":
 然后运行：
 
 ```bash
-python chat_demo.py
+python3 chat_demo.py
 ```
 
 ### 3. 运行简单示例
 
 ```bash
-python simple_chat.py
+python3 simple_chat.py
+```
+
+### 4. 测试不同模型
+
+**对比所有模型（推荐）：**
+```bash
+python3 test_models.py compare
+```
+
+**测试单个模型（交互式）：**
+```bash
+python3 test_models.py test kimi-k2.5
+```
+
+**快速测试（默认对比所有模型）：**
+```bash
+python3 test_models.py
 ```
 
 ## API 配置
 
 - **API 端点**: `https://api.moonshot.cn/v1/chat/completions`
-- **模型选项**:
-  - `moonshot-v1-8k` - 8K 上下文
-  - `moonshot-v1-32k` - 32K 上下文
-  - `moonshot-v1-128k` - 128K 上下文
+- **可用模型**:
+  - `moonshot-v1-8k` - 8K 上下文（标准）
+  - `moonshot-v1-32k` - 32K 上下文（长文本）
+  - `moonshot-v1-128k` - 128K 上下文（超长文本）
 
 ## 参数说明
 
@@ -83,10 +101,10 @@ python simple_chat.py
   - 1.0: 最大随机性
 
 ## 安全提示
+
 ✅ API Key 已保存在 `config.py` 中，该文件已添加到 `.gitignore`，不会被提交到代码仓库。
 
-💡 **其他安全方案**：也可以
-建议使用环境变量：
+💡 **其他安全方案**：也可以使用环境变量：
 ```python
 import os
 API_KEY = os.getenv("MOONSHOT_API_KEY")
